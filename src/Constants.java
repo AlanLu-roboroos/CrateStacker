@@ -13,10 +13,10 @@ public final class Constants {
   public static final int[][] PLATFORM_POS = { { 93, 600 }, { 193, 600 }, { 293, 600 }, { 393, 600 }, { 493, 600 },
       { 593, 600 }, { 693, 600 }, { 793, 600 }, { 893, 600 } };
 
-  public static final Image PLATFORM_IMG = loadImage("./src/Textures/objects/platform.png")
+  public static final Image PLATFORM_IMG = loadImage("./Textures/objects/platform.png")
       .getScaledInstance(80, 80,
           Image.SCALE_DEFAULT);
-  public static final Image SPAWN_IMG = loadImage("./src/Textures/objects/spawn.png")
+  public static final Image SPAWN_IMG = loadImage("./Textures/objects/spawn.png")
       .getScaledInstance(80, 80, Image.SCALE_DEFAULT);
 
   public static Image loadImage(String path) {

@@ -2,12 +2,13 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
-import java.awt.PointerInfo;
+import java.awt.Point;
 import javax.swing.JPanel;
 
 public class Game extends JPanel {
   public Image platformImage, spawnImage;
-  public PointerInfo mousePos;
+  public Point mousePos;
+  public Point lastPoint = new Point(0, 0);
 
   Game() {
     setSize(Constants.WIDTH, Constants.HEIGHT);
@@ -26,7 +27,13 @@ public class Game extends JPanel {
   public void paint(Graphics g) {
     super.paint(g);
 
-    mousePos = MouseInfo.getPointerInfo();
+    if (this.getMousePosition() != null) {
+      mousePos = this.getMousePosition();
+    } else {
+      mousePos = lastPoint;
+    }
+
+    lastPoint = mousePos;
     System.out.println("x: " + mousePos.getLocation().getX() + " y: " + mousePos.getLocation().getY());
 
     for (int[] pos : Constants.PLATFORM_POS) {
