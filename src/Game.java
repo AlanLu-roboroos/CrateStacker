@@ -21,16 +21,8 @@ public class Game extends JPanel {
   }
 
   public void loadImages() {
-    try {
-      platformImage = ImageIO.read(new File("./src/Textures/objects/platform.png")).getScaledInstance(80, 80,
-          Image.SCALE_DEFAULT);
-      spawnImage = ImageIO.read(new File("./src/Textures/objects/spawn.png")).getScaledInstance(80, 80,
-          Image.SCALE_DEFAULT);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.exit(0);
-    }
+    platformImage = Constants.PLATFORM_IMG;
+    spawnImage = Constants.SPAWN_IMG;
   }
 
   @Override
@@ -38,7 +30,7 @@ public class Game extends JPanel {
     super.paint(g);
 
     mousePos = MouseInfo.getPointerInfo();
-    System.out.println("x: " + mousePos.getLocation().x + " y: " + mousePos.getLocation().y);
+    System.out.println("x: " + mousePos.getLocation().getX() + " y: " + mousePos.getLocation().getY());
 
     for (int[] pos : Constants.PLATFORM_POS) {
       g.drawImage(platformImage, pos[0] - platformImage.getWidth(null) / 2, pos[1] - platformImage.getHeight(null) / 2,
