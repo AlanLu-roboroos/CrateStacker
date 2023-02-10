@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.JPanel;
 
