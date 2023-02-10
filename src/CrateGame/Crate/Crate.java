@@ -1,4 +1,4 @@
-package Crate;
+package CrateGame.Crate;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -10,6 +10,8 @@ public abstract class Crate extends Canvas {
   private boolean infected;
   private boolean explosionResistence;
   private Image image;
+
+  private int[] pos;
 
   public Crate(int line, int height) {
     this.line = line;

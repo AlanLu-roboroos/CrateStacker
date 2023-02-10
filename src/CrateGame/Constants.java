@@ -1,3 +1,5 @@
+package CrateGame;
+
 import javax.imageio.ImageIO;
 import java.awt.Image;
 import java.io.File;
