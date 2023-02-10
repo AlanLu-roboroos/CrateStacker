@@ -3,9 +3,6 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Game extends JPanel {
