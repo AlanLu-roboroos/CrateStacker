@@ -38,7 +38,8 @@ public class Game extends JPanel {
     System.out.println("x: " + mousePos.getLocation().getX() + " y: " + mousePos.getLocation().getY());
 
     for (int[] pos : Constants.PLATFORM_POS) {
-      g.drawImage(platformImage, pos[0] - platformImage.getWidth(null) / 2, pos[1] - platformImage.getHeight(null) / 2,
+      g.drawImage(platformImage, pos[0] - platformImage.getWidth(null) / 2,
+          pos[1] - platformImage.getHeight(null) / 2 + 8,
           null);
       // g.drawRect(pos[0], pos[1], 2, 2); // For Testing
     }
