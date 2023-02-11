@@ -1,11 +1,15 @@
 package CrateGame;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class App {
     static Game game;
     static JFrame frame;
-    static Timer timer;
+    static Timer timer, spawnTimer;
+    static Random random = new Random();
 
     public static void main(String[] args) throws Exception {
         frame = new JFrame("CrateStacker");
@@ -27,6 +31,15 @@ public class App {
         });
 
         timer.start();
+
+        // spawnTimer = new Timer(0, null);
+        // spawnTimer.setRepeats(true);
+        // spawnTimer.setDelay(1000);
+        // spawnTimer.addActionListener(e -> {
+        // game.spawnCrate(random.nextInt(9));
+        // });
+
+        // spawnTimer.start();
 
     }
 }
