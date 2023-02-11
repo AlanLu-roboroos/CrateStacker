@@ -17,6 +17,8 @@ public class Game extends JPanel {
   public Point mousePos;
   public Point lastPoint = new Point(0, 0);
 
+  public Grabber grabber = new Grabber();
+
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public int foundCrates = 1;
 
@@ -70,6 +72,8 @@ public class Game extends JPanel {
         c.paint(g);
       }
     }
+
+    grabber.paint(g);
   }
 
   public boolean spawnCrate(int column) {
