@@ -21,7 +21,7 @@ public class App {
         frame.setVisible(true);
 
         timer.setRepeats(true);
-        timer.setDelay(1000 / 60);
+        timer.setDelay(1000 / 240);
         timer.addActionListener(e -> {
             game.repaint();
         });
