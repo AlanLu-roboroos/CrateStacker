@@ -10,7 +10,13 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 import CrateGame.Crate.Crate;
+import CrateGame.Crate.GoldCrate;
+import CrateGame.Crate.GreenCrate;
+import CrateGame.Crate.OrangeCrate;
+import CrateGame.Crate.PinkCrate;
 import CrateGame.Crate.PurpleCrate;
+import CrateGame.Crate.RedCrate;
+import CrateGame.Crate.YellowCrate;
 import CrateGame.Crate.BlueCrate;
 
 public class Game extends JPanel {
@@ -21,7 +27,7 @@ public class Game extends JPanel {
   // public Grabber grabber = new Grabber();
 
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
-  public int foundCrates = 1;
+  public int foundCrates = 0;
 
   public Random random = new Random();
 
@@ -87,9 +93,27 @@ public class Game extends JPanel {
     if (crates.get(column).size() < 7) {
       Crate temp;
 
-      switch (random.nextInt() % foundCrates) {
+      switch (random.nextInt() % (foundCrates + 1)) {
         case 1:
-          temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          temp = new BlueCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 2:
+          temp = new GreenCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 3:
+          temp = new YellowCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 4:
+          temp = new OrangeCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 5:
+          temp = new RedCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 6:
+          temp = new PinkCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
+          break;
+        case 7:
+          temp = new GoldCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
           break;
         default:
           temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
@@ -125,6 +149,11 @@ public class Game extends JPanel {
           crates.get(j).remove(i - 1);
           crates.get(j).remove(i - 2);
 
+          if (tempMergeCrate.getCrateID() == foundCrates + 1) {
+            foundCrates++;
+            foundCrates = Math.min(foundCrates, 7);
+          }
+
           if (tempMergeCrate != null) {
             crates.get(j).add(i - 2, tempMergeCrate);
           }
@@ -139,5 +168,14 @@ public class Game extends JPanel {
         crate.updatePos(cratePile.indexOf(crate));
       }
     }
+  }
+
+  public boolean spawnable() {
+    for (ArrayList<Crate> cratePile : crates) {
+      if (cratePile.size() < 7) {
+        return true;
+      }
+    }
+    return false;
   }
 }

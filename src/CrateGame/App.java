@@ -32,14 +32,16 @@ public class App {
 
         timer.start();
 
-        // spawnTimer = new Timer(0, null);
-        // spawnTimer.setRepeats(true);
-        // spawnTimer.setDelay(1000);
-        // spawnTimer.addActionListener(e -> {
-        // game.spawnCrate(random.nextInt(9));
-        // });
+        spawnTimer = new Timer(0, null);
+        spawnTimer.setRepeats(true);
+        spawnTimer.setDelay(500);
+        spawnTimer.addActionListener(e -> {
+            while (game.spawnable() && !game.spawnCrate(random.nextInt(9))) {
+            }
+            // game.spawnCrate(0);
+        });
 
-        // spawnTimer.start();
+        spawnTimer.start();
 
     }
 }
