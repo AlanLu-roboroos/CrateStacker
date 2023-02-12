@@ -106,7 +106,6 @@ public class Game extends JPanel {
     for (int j = 0; j < crates.size(); j++) {
       mergeCounter = 0;
       for (int i = 0; i < crates.get(j).size(); i++) {
-        System.out.println("ID: " + currMergeId + " Count: " + mergeCounter);
         if (crates.get(j).get(i).isMergeable(crates.get(j))) {
           if (mergeCounter == 0) {
             currMergeId = crates.get(j).get(i).getCrateID();
@@ -127,7 +126,6 @@ public class Game extends JPanel {
           crates.get(j).remove(i - 2);
 
           if (tempMergeCrate != null) {
-            System.out.println("Added new Crate");
             crates.get(j).add(i - 2, tempMergeCrate);
           }
         }
