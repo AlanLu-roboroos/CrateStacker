@@ -79,6 +79,7 @@ public class Game extends JPanel {
     }
 
     mergeAll();
+    updateCratePos();
     // grabber.paint(g);
   }
 
@@ -88,10 +89,10 @@ public class Game extends JPanel {
 
       switch (random.nextInt() % foundCrates) {
         case 1:
-          temp = new PurpleCrate(column, crates.get(column).size(), Constants.MAX_CRATE_PER_LINE);
+          temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
           break;
         default:
-          temp = new PurpleCrate(column, crates.get(column).size(), Constants.MAX_CRATE_PER_LINE);
+          temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
           break;
       }
       crates.get(column).add(temp);
@@ -130,6 +131,14 @@ public class Game extends JPanel {
             crates.get(j).add(i - 2, tempMergeCrate);
           }
         }
+      }
+    }
+  }
+
+  public void updateCratePos() {
+    for (ArrayList<Crate> cratePile : crates) {
+      for (Crate crate : cratePile) {
+        crate.updatePos(cratePile.indexOf(crate));
       }
     }
   }

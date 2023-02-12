@@ -18,8 +18,8 @@ public class PurpleCrate extends BaseCrate implements Crate {
 
   private int[] pos;
 
-  public PurpleCrate(int line, int height, int startPos) {
-    super(line, height, startPos);
+  public PurpleCrate(int line, int height, double crateSpawnHeight) {
+    super(line, height, crateSpawnHeight);
   }
 
   @Override
@@ -29,7 +29,6 @@ public class PurpleCrate extends BaseCrate implements Crate {
 
   @Override
   public Crate nextCrate(int line, int height) {
-    System.out.println("PurpleCrate.nextCrate");
     return (new BlueCrate(line, height, height + 1));
   }
 

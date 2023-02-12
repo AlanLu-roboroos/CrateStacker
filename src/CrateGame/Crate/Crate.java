@@ -12,4 +12,6 @@ public interface Crate {
   public Crate nextCrate(int line, int height);
 
   public int getCrateID();
+
+  public void updatePos(int pos);
 }

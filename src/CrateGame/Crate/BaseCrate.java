@@ -3,6 +3,7 @@ package CrateGame.Crate;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.lang.Math;
 
 import java.util.ArrayList;
 
@@ -20,14 +21,14 @@ public abstract class BaseCrate {
 
   private int[] pos;
 
-  public BaseCrate(int line, int height, int startPos) {
+  public BaseCrate(int line, int height, double startPos) {
     this.line = line;
     this.height = height;
 
     fallStartTime = System.currentTimeMillis();
 
     this.x = 93 + (line * 100);
-    this.y = 600 - Constants.Images.CRATE_HEIGHT * startPos;
+    this.y = (int) Math.round(600 - Constants.Images.CRATE_HEIGHT * startPos);
   }
 
   public abstract Image getImage();
@@ -48,4 +49,11 @@ public abstract class BaseCrate {
   public abstract Crate nextCrate(int line, int height);
 
   public abstract int getCrateID();
+
+  public void updatePos(int pos) {
+    if (height != pos) {
+      fallStartTime = System.currentTimeMillis();
+      height = pos;
+    }
+  }
 }

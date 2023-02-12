@@ -16,7 +16,7 @@ public final class Constants {
                         { 493, 600 },
                         { 593, 600 }, { 693, 600 }, { 793, 600 }, { 893, 600 } };
 
-        public static final int MAX_CRATE_PER_LINE = 8;
+        public static final double CRATE_SPAWN_HEIGHT = 7.15;
         public static final int MAX_NUM_LINE = 9;
 
         public static class Images {
