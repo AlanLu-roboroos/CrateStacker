@@ -19,10 +19,10 @@ public class Grabber {
     x = Constants.WIDTH / 2;
     y = 0;
 
-    Left = Constants.GRABBER_LEFT_IMG;
-    Right = Constants.GRABBER_RIGHT_IMG;
-    Horizontal = Constants.GRABBER_HORIZONTAL_IMG;
-    Vertical = Constants.GRABBER_VERTICAL_IMG;
+    Left = Constants.Images.GRABBER_LEFT_IMG;
+    Right = Constants.Images.GRABBER_RIGHT_IMG;
+    Horizontal = Constants.Images.GRABBER_HORIZONTAL_IMG;
+    Vertical = Constants.Images.GRABBER_VERTICAL_IMG;
   }
 
   public void paint(Graphics g) {

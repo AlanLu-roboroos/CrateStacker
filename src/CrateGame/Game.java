@@ -11,25 +11,30 @@ import javax.swing.JPanel;
 
 import CrateGame.Crate.Crate;
 import CrateGame.Crate.PurpleCrate;
+import CrateGame.Crate.BlueCrate;
 
 public class Game extends JPanel {
   public Image platformImage, spawnImage;
   public Point mousePos;
   public Point lastPoint = new Point(0, 0);
 
-  public Grabber grabber = new Grabber();
+  // public Grabber grabber = new Grabber();
 
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public int foundCrates = 1;
 
   public Random random = new Random();
 
+  public int mergeCounter;
+  public int currMergeId;
+  public Crate tempMergeCrate;
+
   Game() {
     setSize(Constants.WIDTH, Constants.HEIGHT);
     setBackground(new Color(48, 48, 48));
     loadImages();
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < Constants.MAX_NUM_LINE; i++) {
       crates.add(new ArrayList<Crate>());
     }
 
@@ -37,8 +42,8 @@ public class Game extends JPanel {
   }
 
   public void loadImages() {
-    platformImage = Constants.PLATFORM_IMG;
-    spawnImage = Constants.SPAWN_IMG;
+    platformImage = Constants.Images.PLATFORM_IMG;
+    spawnImage = Constants.Images.SPAWN_IMG;
   }
 
   @Override
@@ -73,7 +78,8 @@ public class Game extends JPanel {
       }
     }
 
-    grabber.paint(g);
+    mergeAll();
+    // grabber.paint(g);
   }
 
   public boolean spawnCrate(int column) {
@@ -82,10 +88,10 @@ public class Game extends JPanel {
 
       switch (random.nextInt() % foundCrates) {
         case 1:
-          temp = new PurpleCrate(column, crates.get(column).size());
+          temp = new PurpleCrate(column, crates.get(column).size(), Constants.MAX_CRATE_PER_LINE);
           break;
         default:
-          temp = new PurpleCrate(column, crates.get(column).size());
+          temp = new PurpleCrate(column, crates.get(column).size(), Constants.MAX_CRATE_PER_LINE);
           break;
       }
       crates.get(column).add(temp);
@@ -95,4 +101,36 @@ public class Game extends JPanel {
     }
   }
 
+  public void mergeAll() {
+    for (int j = 0; j < crates.size(); j++) {
+      mergeCounter = 0;
+      for (int i = 0; i < crates.get(j).size(); i++) {
+        System.out.println("ID: " + currMergeId + " Count: " + mergeCounter);
+        if (crates.get(j).get(i).isMergeable(crates.get(j))) {
+          if (mergeCounter == 0) {
+            currMergeId = crates.get(j).get(i).getCrateID();
+          } else if (currMergeId != crates.get(j).get(i).getCrateID()) {
+            mergeCounter = 0;
+            i--;
+            continue;
+          }
+          mergeCounter++;
+        } else {
+          mergeCounter = 0;
+        }
+        if (mergeCounter >= 3) {
+          mergeCounter = 0;
+          tempMergeCrate = crates.get(j).get(i).nextCrate(j, i - 2);
+          crates.get(j).remove(i);
+          crates.get(j).remove(i - 1);
+          crates.get(j).remove(i - 2);
+
+          if (tempMergeCrate != null) {
+            System.out.println("Added new Crate");
+            crates.get(j).add(i - 2, tempMergeCrate);
+          }
+        }
+      }
+    }
+  }
 }
