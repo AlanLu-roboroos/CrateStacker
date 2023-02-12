@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import CrateGame.Constants;
 
-public abstract class BaseCrate {
+public abstract class BaseCrate implements Crate {
   private int line;
   private int height;
   private int x;
@@ -50,10 +50,20 @@ public abstract class BaseCrate {
 
   public abstract int getCrateID();
 
+  @Override
   public void updatePos(int pos) {
     if (height != pos) {
       fallStartTime = System.currentTimeMillis();
       height = pos;
+    }
+  }
+
+  @Override
+  public boolean lineSpawnable() {
+    if (this.y > 600 - Constants.CRATE_POS_SPAWNABLE * Constants.Images.CRATE_HEIGHT) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

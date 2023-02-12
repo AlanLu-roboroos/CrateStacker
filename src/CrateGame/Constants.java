@@ -18,6 +18,7 @@ public final class Constants {
 
         public static final double CRATE_SPAWN_HEIGHT = 7.15;
         public static final int MAX_NUM_LINE = 9;
+        public static final double CRATE_POS_SPAWNABLE = 6.5;
 
         public static class Images {
                 public static final int CRATE_HEIGHT = 70;

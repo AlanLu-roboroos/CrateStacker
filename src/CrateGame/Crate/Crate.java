@@ -14,4 +14,6 @@ public interface Crate {
   public int getCrateID();
 
   public void updatePos(int pos);
+
+  public boolean lineSpawnable();
 }
