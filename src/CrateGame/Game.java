@@ -28,7 +28,7 @@ public class Game extends JPanel {
   public Grabber grabber = new Grabber();
 
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
-  public int foundCrates = 0;
+  public ArrayList<Integer> spawnCrates = new ArrayList<Integer>();
 
   public Random random = new Random();
 
