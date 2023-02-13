@@ -6,18 +6,21 @@ import java.io.File;
 import java.io.IOException;
 
 public final class Constants {
-        public static final int WIDTH = 1000;
-        public static final int HEIGHT = 700;
+        public static final int WIDTH = 1200;
+        public static final int HEIGHT = 900;
 
-        public static final int[][] SPAWN_POS = { { 93, 100 }, { 193, 100 }, { 293, 100 }, { 393, 100 }, { 493, 100 },
-                        { 593, 100 }, { 693, 100 }, { 793, 100 }, { 893, 100 } };
+        public static final int BORDER_HEIGHT = 100;
 
-        public static final int[][] PLATFORM_POS = { { 93, 600 }, { 193, 600 }, { 293, 600 }, { 393, 600 },
-                        { 493, 600 },
-                        { 593, 600 }, { 693, 600 }, { 793, 600 }, { 893, 600 } };
+        public static final int[][] SPAWN_POS = { { 100, 300 }, { 242, 300 }, { 385, 300 }, { 528, 300 }, { 671, 300 },
+                        { 814, 300 }, { 957, 300 }, { 1100, 300 } };
+
+        public static final int[][] PLATFORM_POS = { { 100, 800 }, { 242, 800 }, { 385, 800 }, { 528, 800 },
+                        { 671, 800 },
+                        { 814, 800 }, { 957, 800 }, { 1100, 800 } };
 
         public static final double CRATE_SPAWN_HEIGHT = 7.15;
-        public static final int MAX_NUM_LINE = 9;
+        public static final int MAX_NUM_LINE = 8;
+        public static final int CRATES_PER_LINE = 6;
         public static final double CRATE_POS_SPAWNABLE = 6.5;
 
         public static class Images {

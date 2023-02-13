@@ -8,6 +8,7 @@ public class Grabber {
   public Image Left, Right, Horizontal, Vertical;
 
   public State state = State.STANDBY;
+  public double currColumn = 4.5;
 
   public enum State {
     STANDBY,
@@ -17,7 +18,7 @@ public class Grabber {
 
   public Grabber() {
     x = Constants.WIDTH / 2;
-    y = 0;
+    y = Constants.BORDER_HEIGHT;
 
     Left = Constants.Images.GRABBER_LEFT_IMG;
     Right = Constants.Images.GRABBER_RIGHT_IMG;
@@ -26,8 +27,8 @@ public class Grabber {
   }
 
   public void paint(Graphics g) {
-    g.drawImage(Left, x - 70, y + 70, null);
-    g.drawImage(Right, x + 70, y + 70, null);
+    g.drawImage(Left, x - 70, y + 61, null);
+    g.drawImage(Right, x + 70, y + 61, null);
     g.drawImage(Horizontal, x, y + 70, null);
     g.drawImage(Vertical, x, y, null);
   }

@@ -27,8 +27,8 @@ public abstract class BaseCrate implements Crate {
 
     fallStartTime = System.currentTimeMillis();
 
-    this.x = 93 + (line * 100);
-    this.y = (int) Math.round(600 - Constants.Images.CRATE_HEIGHT * startPos);
+    this.x = Constants.SPAWN_POS[line][0];
+    this.y = (int) Math.round(Constants.PLATFORM_POS[0][1] - Constants.Images.CRATE_HEIGHT * startPos);
   }
 
   public abstract Image getImage();
@@ -36,11 +36,11 @@ public abstract class BaseCrate implements Crate {
   public void paint(Graphics g) {
     g.drawImage(getImage(), x - getImage().getWidth(null) / 2, y - getImage().getHeight(null) / 2, null);
     y += Math.pow(System.currentTimeMillis() - fallStartTime, 2) / 10000;
-    y = Math.min(y, 600 - getImage().getHeight(null) * height);
+    y = Math.min(y, Constants.PLATFORM_POS[0][1]- getImage().getHeight(null) * height);
   }
 
   public boolean isMergeable(ArrayList<Crate> crates) {
-    if (infected || y != 600 - getImage().getHeight(null) * height) {
+    if (infected || y != Constants.PLATFORM_POS[0][1] - getImage().getHeight(null) * height) {
       return false;
     }
     return true;

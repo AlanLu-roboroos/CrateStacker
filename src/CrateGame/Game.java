@@ -18,13 +18,14 @@ import CrateGame.Crate.PurpleCrate;
 import CrateGame.Crate.RedCrate;
 import CrateGame.Crate.YellowCrate;
 import CrateGame.Crate.BlueCrate;
+import CrateGame.Crate.BombCrate;
 
 public class Game extends JPanel {
   public Image platformImage, spawnImage;
   public Point mousePos;
   public Point lastPoint = new Point(0, 0);
 
-  // public Grabber grabber = new Grabber();
+  public Grabber grabber = new Grabber();
 
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public int foundCrates = 0;
@@ -37,7 +38,6 @@ public class Game extends JPanel {
 
   Game() {
     setSize(Constants.WIDTH, Constants.HEIGHT);
-    setBackground(new Color(48, 48, 48));
     loadImages();
 
     for (int i = 0; i < Constants.MAX_NUM_LINE; i++) {
@@ -55,6 +55,11 @@ public class Game extends JPanel {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
+    
+    g.setColor(new Color(128, 128, 128));
+    g.fillRect(0, Constants.BORDER_HEIGHT, 1200, 900 - Constants.BORDER_HEIGHT);
+    g.setColor(new Color(100, 100, 100));
+    g.fillRect(0, 0, 1200, Constants.BORDER_HEIGHT);
 
     if (this.getMousePosition() != null) {
       mousePos = this.getMousePosition();
@@ -65,6 +70,9 @@ public class Game extends JPanel {
     lastPoint = mousePos;
     // System.out.println("x: " + mousePos.getLocation().getX() + " y: " +
     // mousePos.getLocation().getY());
+
+    g.setColor(new Color(64, 64, 64));
+    g.fillRect(0, Constants.BORDER_HEIGHT, 1200, 5);
 
     for (int[] pos : Constants.PLATFORM_POS) {
       g.drawImage(platformImage, pos[0] - platformImage.getWidth(null) / 2,
@@ -86,11 +94,11 @@ public class Game extends JPanel {
 
     mergeAll();
     updateCratePos();
-    // grabber.paint(g);
+    grabber.paint(g);
   }
 
   public boolean spawnCrate(int column) {
-    if (crates.get(column).size() < 7) {
+    if (crates.get(column).size() < Constants.CRATES_PER_LINE) {
       Crate temp;
 
       switch (random.nextInt() % (foundCrates + 1)) {
@@ -119,6 +127,7 @@ public class Game extends JPanel {
           temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
           break;
       }
+      // crates.get(column).add(new BombCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT));
       crates.get(column).add(temp);
       return true;
     } else {
@@ -151,7 +160,7 @@ public class Game extends JPanel {
 
           if (tempMergeCrate.getCrateID() == foundCrates + 1) {
             foundCrates++;
-            foundCrates = Math.min(foundCrates, 7);
+            foundCrates = Math.min(foundCrates, Constants.CRATES_PER_LINE);
           }
 
           if (tempMergeCrate != null) {
@@ -172,7 +181,7 @@ public class Game extends JPanel {
 
   public boolean spawnable() {
     for (ArrayList<Crate> cratePile : crates) {
-      if (cratePile.size() < 7) {
+      if (cratePile.size() < Constants.CRATES_PER_LINE) {
         return true;
       }
     }
