@@ -17,6 +17,7 @@ import CrateGame.Crate.PinkCrate;
 import CrateGame.Crate.PurpleCrate;
 import CrateGame.Crate.RedCrate;
 import CrateGame.Crate.YellowCrate;
+import CrateGame.Grabber.State;
 import CrateGame.Crate.BlueCrate;
 import CrateGame.Crate.BombCrate;
 
@@ -25,10 +26,11 @@ public class Game extends JPanel {
   public Point mousePos;
   public Point lastPoint = new Point(0, 0);
 
-  public Grabber grabber = new Grabber();
-
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public ArrayList<Integer> spawnCrates = new ArrayList<Integer>();
+
+  public Grabber grabber = new Grabber();
+  public MouseInput mouseInput = new MouseInput(crates, grabber);
 
   public Random random = new Random();
 
@@ -43,6 +45,9 @@ public class Game extends JPanel {
     for (int i = 0; i < Constants.MAX_NUM_LINE; i++) {
       crates.add(new ArrayList<Crate>());
     }
+    addMouseListener(mouseInput);
+
+    spawnCrates.add(0);
 
     setVisible(true);
   }
@@ -61,7 +66,9 @@ public class Game extends JPanel {
     g.setColor(new Color(80, 80, 80));
     g.fillRect(0, 0, 1200, Constants.BORDER_HEIGHT);
 
-    if (this.getMousePosition() != null) {
+    if (this.getMousePosition() != null)
+
+    {
       mousePos = this.getMousePosition();
     } else {
       mousePos = lastPoint;
@@ -88,13 +95,26 @@ public class Game extends JPanel {
 
     for (ArrayList<Crate> crate : crates) {
       for (Crate c : crate) {
-        c.paint(g);
+        c.paint(g, 0);
+      }
+    }
+
+    if (mouseInput.heldCrate != null) {
+      if (grabber.state == Grabber.State.LOWERING_EMPTY)
+        mouseInput.heldCrate.paint(g, 0);
+      else {
+        mouseInput.heldCrate.paint(g, -1);
+      }
+      if (grabber.state == State.RAISING_EMPTY) {
+        mouseInput.heldCrate = null;
       }
     }
 
     mergeAll();
+
     updateCratePos();
-    grabber.paint(g);
+    grabber.paint(g, crates);
+
   }
 
   public boolean spawnCrate(int column) {

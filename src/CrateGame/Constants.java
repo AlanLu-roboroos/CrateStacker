@@ -22,6 +22,7 @@ public final class Constants {
         public static final int MAX_NUM_LINE = 8;
         public static final int CRATES_PER_LINE = 6;
         public static final double CRATE_POS_SPAWNABLE = 6.5;
+        public static final long GRABBER_SPEED = 64;
 
         public static class Images {
                 public static final int CRATE_HEIGHT = 70;

@@ -33,10 +33,13 @@ public abstract class BaseCrate implements Crate {
 
   public abstract Image getImage();
 
-  public void paint(Graphics g) {
+  public void paint(Graphics g, int isHeld) {
     g.drawImage(getImage(), x - getImage().getWidth(null) / 2, y - getImage().getHeight(null) / 2, null);
-    y += Math.pow(System.currentTimeMillis() - fallStartTime, 2) / 10000;
-    y = Math.min(y, Constants.PLATFORM_POS[0][1]- getImage().getHeight(null) * height);
+    if (isHeld == 0)
+      y += Math.pow(System.currentTimeMillis() - fallStartTime, 2) / 12000;
+    else
+      y += Constants.GRABBER_SPEED * isHeld;
+    y = Math.max(Math.min(y, Constants.PLATFORM_POS[0][1] - getImage().getHeight(null) * height), 160);
   }
 
   public boolean isMergeable(ArrayList<Crate> crates) {

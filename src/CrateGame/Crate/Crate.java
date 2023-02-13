@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public interface Crate {
 
-  public void paint(Graphics g);
+  public void paint(Graphics g, int isHeld);
 
   public boolean isMergeable(ArrayList<Crate> crates);
 
