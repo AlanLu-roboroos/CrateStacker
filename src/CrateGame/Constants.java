@@ -7,18 +7,18 @@ import java.io.IOException;
 
 public final class Constants {
         public static final int WIDTH = 1200;
-        public static final int HEIGHT = 900;
+        public static final int HEIGHT = 800;
 
-        public static final int BORDER_HEIGHT = 100;
+        public static final int BORDER_HEIGHT = 80;
 
-        public static final int[][] SPAWN_POS = { { 100, 300 }, { 242, 300 }, { 385, 300 }, { 528, 300 }, { 671, 300 },
-                        { 814, 300 }, { 957, 300 }, { 1100, 300 } };
+        public static final int[][] SPAWN_POS = { { 100, 240 }, { 242, 240 }, { 385, 240 }, { 528, 240 }, { 671, 240 },
+                        { 814, 240 }, { 957, 240 }, { 1100, 240 } };
 
-        public static final int[][] PLATFORM_POS = { { 100, 800 }, { 242, 800 }, { 385, 800 }, { 528, 800 },
-                        { 671, 800 },
-                        { 814, 800 }, { 957, 800 }, { 1100, 800 } };
+        public static final int[][] PLATFORM_POS = { { 100, 700 }, { 242, 700 }, { 385, 700 }, { 528, 700 },
+                        { 671, 700 },
+                        { 814, 700 }, { 957, 700 }, { 1100, 700 } };
 
-        public static final double CRATE_SPAWN_HEIGHT = 7.15;
+        public static final double CRATE_SPAWN_HEIGHT = 6.6;
         public static final int MAX_NUM_LINE = 8;
         public static final int CRATES_PER_LINE = 6;
         public static final double CRATE_POS_SPAWNABLE = 6.5;

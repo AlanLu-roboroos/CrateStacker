@@ -16,4 +16,8 @@ public interface Crate {
   public void updatePos(int pos);
 
   public boolean lineSpawnable();
+
+  public boolean spawnable();
+
+  public boolean isLiftable();
 }

@@ -66,4 +66,14 @@ public abstract class BaseCrate implements Crate {
       return false;
     }
   }
+
+  @Override
+  public boolean spawnable() {
+    return true;
+  }
+
+  @Override
+  public boolean isLiftable() {
+    return true;
+  }
 }

@@ -55,10 +55,10 @@ public class Game extends JPanel {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    
-    g.setColor(new Color(128, 128, 128));
-    g.fillRect(0, Constants.BORDER_HEIGHT, 1200, 900 - Constants.BORDER_HEIGHT);
+
     g.setColor(new Color(100, 100, 100));
+    g.fillRect(0, Constants.BORDER_HEIGHT, 1200, 900 - Constants.BORDER_HEIGHT);
+    g.setColor(new Color(80, 80, 80));
     g.fillRect(0, 0, 1200, Constants.BORDER_HEIGHT);
 
     if (this.getMousePosition() != null) {
@@ -99,35 +99,10 @@ public class Game extends JPanel {
 
   public boolean spawnCrate(int column) {
     if (crates.get(column).size() < Constants.CRATES_PER_LINE) {
-      Crate temp;
-
-      switch (random.nextInt() % (foundCrates + 1)) {
-        case 1:
-          temp = new BlueCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 2:
-          temp = new GreenCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 3:
-          temp = new YellowCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 4:
-          temp = new OrangeCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 5:
-          temp = new RedCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 6:
-          temp = new PinkCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        case 7:
-          temp = new GoldCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-        default:
-          temp = new PurpleCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT);
-          break;
-      }
-      // crates.get(column).add(new BombCrate(column, crates.get(column).size(), Constants.CRATE_SPAWN_HEIGHT));
+      Crate temp = getCrate(random.nextInt(spawnCrates.size()), column, crates.get(column).size(),
+          Constants.CRATE_SPAWN_HEIGHT);
+      // crates.get(column).add(new BombCrate(column, crates.get(column).size(),
+      // Constants.CRATE_SPAWN_HEIGHT));
       crates.get(column).add(temp);
       return true;
     } else {
@@ -158,9 +133,8 @@ public class Game extends JPanel {
           crates.get(j).remove(i - 1);
           crates.get(j).remove(i - 2);
 
-          if (tempMergeCrate.getCrateID() == foundCrates + 1) {
-            foundCrates++;
-            foundCrates = Math.min(foundCrates, Constants.CRATES_PER_LINE);
+          if (tempMergeCrate.spawnable() && !spawnCrates.contains(tempMergeCrate.getCrateID())) {
+            spawnCrates.add(tempMergeCrate.getCrateID());
           }
 
           if (tempMergeCrate != null) {
@@ -186,5 +160,30 @@ public class Game extends JPanel {
       }
     }
     return false;
+  }
+
+  public Crate getCrate(int id, int column, int row, double height) {
+    switch (id) {
+      case 0:
+        return new PurpleCrate(column, row, height);
+      case 1:
+        return new BlueCrate(column, row, height);
+      case 2:
+        return new GreenCrate(column, row, height);
+      case 3:
+        return new YellowCrate(column, row, height);
+      case 4:
+        return new OrangeCrate(column, row, height);
+      case 5:
+        return new RedCrate(column, row, height);
+      case 6:
+        return new PinkCrate(column, row, height);
+      case 7:
+        return new GoldCrate(column, row, height);
+      case 8:
+        return new BombCrate(column, row, height);
+      default:
+        return null;
+    }
   }
 }
