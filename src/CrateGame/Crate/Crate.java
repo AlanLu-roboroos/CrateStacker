@@ -1,6 +1,7 @@
 package CrateGame.Crate;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 
 public interface Crate {
@@ -20,4 +21,15 @@ public interface Crate {
   public boolean spawnable();
 
   public boolean isLiftable();
+
+  public void setColumn(int column);
+
+  public void setHeight(int height);
+
+  public Image getImage();
+
+  public int getY();
+
+  public int getX();
 }
+

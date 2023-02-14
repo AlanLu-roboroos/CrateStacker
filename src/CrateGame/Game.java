@@ -29,7 +29,7 @@ public class Game extends JPanel {
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public ArrayList<Integer> spawnCrates = new ArrayList<Integer>();
 
-  public Grabber grabber = new Grabber();
+  public Grabber grabber = new Grabber(crates);
   public MouseInput mouseInput = new MouseInput(crates, grabber);
 
   public Random random = new Random();
@@ -99,21 +99,10 @@ public class Game extends JPanel {
       }
     }
 
-    if (mouseInput.heldCrate != null) {
-      if (grabber.state == Grabber.State.LOWERING_EMPTY)
-        mouseInput.heldCrate.paint(g, 0);
-      else {
-        mouseInput.heldCrate.paint(g, -1);
-      }
-      if (grabber.state == State.RAISING_EMPTY) {
-        mouseInput.heldCrate = null;
-      }
-    }
-
     mergeAll();
 
     updateCratePos();
-    grabber.paint(g, crates);
+    grabber.paint(g);
 
   }
 

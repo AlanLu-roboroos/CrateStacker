@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import CrateGame.Constants;
 
 public abstract class BaseCrate implements Crate {
-  private int line;
-  private int height;
-  private int x;
-  private int y;
-  private boolean infected;
-  private boolean explosionResistence;
+  public int line;
+  public int height;
+  public int x;
+  public int y;
+  public boolean infected;
+  public boolean explosionResistence;
 
   private long fallStartTime;
 
@@ -33,10 +33,18 @@ public abstract class BaseCrate implements Crate {
 
   public abstract Image getImage();
 
+  public void setColumn(int column) {
+    this.x = Constants.SPAWN_POS[column][0];
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
   public void paint(Graphics g, int isHeld) {
     g.drawImage(getImage(), x - getImage().getWidth(null) / 2, y - getImage().getHeight(null) / 2, null);
     if (isHeld == 0)
-      y += Math.pow(System.currentTimeMillis() - fallStartTime, 2) / 12000;
+      y += Math.pow(System.currentTimeMillis() - fallStartTime, 2) / 60000;
     else
       y += Constants.GRABBER_SPEED * isHeld;
     y = Math.max(Math.min(y, Constants.PLATFORM_POS[0][1] - getImage().getHeight(null) * height), 160);
@@ -78,5 +86,15 @@ public abstract class BaseCrate implements Crate {
   @Override
   public boolean isLiftable() {
     return true;
+  }
+
+  @Override
+  public int getX() {
+    return x;
+  }
+
+  @Override
+  public int getY() {
+    return y;
   }
 }

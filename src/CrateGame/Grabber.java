@@ -13,24 +13,26 @@ public class Grabber {
 
   public long startTime;
 
+  public Crate heldCrate = null;
+
+  public ArrayList<ArrayList<Crate>> crates;
+
   public enum State {
-    STANDBY_EMPTY,
     STANDBY,
-    RAISING_EMPTY,
     RAISING,
-    LOWERING_EMPTY,
     LOWERING
   }
 
-  public State state = State.STANDBY_EMPTY;
-  public double currColumn = 4.5;
+  public State state = State.STANDBY;
 
+  public double currColumn = 3.5;
   public int currHeight = -1;
-  public boolean succesfull;
 
-  public Grabber() {
+  public Grabber(ArrayList<ArrayList<Crate>> crates) {
     x = Constants.WIDTH / 2;
     y = Constants.BORDER_HEIGHT;
+
+    this.crates = crates;
 
     Left = Constants.Images.GRABBER_LEFT_IMG;
     Right = Constants.Images.GRABBER_RIGHT_IMG;
@@ -40,143 +42,61 @@ public class Grabber {
     startTime = 0;
   }
 
-  public boolean goTo(int column, int height, boolean succesfull) {
-    if (state == State.STANDBY_EMPTY || state == State.STANDBY) {
-      currColumn = column;
-      currHeight = height;
-      y = Constants.BORDER_HEIGHT;
-      startTime = System.currentTimeMillis();
-      this.succesfull = succesfull;
-      if (state == State.STANDBY_EMPTY) {
-        state = State.LOWERING_EMPTY;
-      } else {
+  public void goTo(int column) {
+    if (state == State.STANDBY) {
+        currColumn = column;
+        currHeight = crates.get(column).size();
         state = State.LOWERING;
-      }
-      return true;
-    } else {
-      return false;
     }
   }
 
-  public void paint(Graphics g, ArrayList<ArrayList<Crate>> crates) {
-    switch (state) {
-      case STANDBY_EMPTY:
-        g.drawImage(
-            Horizontal.getScaledInstance(Constants.Images.CRATE_WIDTH + 30, Constants.Images.CRATE_WIDTH,
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - (Constants.Images.CRATE_WIDTH + 30) / 2),
-            Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 80 - Constants.Images.CRATE_WIDTH / 2),
-            Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 80 - Constants.Images.CRATE_WIDTH / 2),
-            Constants.BORDER_HEIGHT + 21, null);
-        break;
-      case STANDBY:
-        g.drawImage(Horizontal, (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2),
-            Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 70 - Constants.Images.CRATE_WIDTH / 2),
-            Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 70 - Constants.Images.CRATE_WIDTH / 2),
-            Constants.BORDER_HEIGHT + 21, null);
-        break;
-      case RAISING_EMPTY:
-        g.drawImage(
-            Horizontal.getScaledInstance(Constants.Images.CRATE_WIDTH + 30, Constants.Images.CRATE_WIDTH,
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - (Constants.Images.CRATE_WIDTH + 30) / 2),
-            y + Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-
-        y -= (int) (Constants.GRABBER_SPEED);
-
-        if (y <= Constants.BORDER_HEIGHT)
-          state = State.STANDBY_EMPTY;
-        break;
-      case RAISING:
-        g.drawImage(
-            Horizontal.getScaledInstance(Constants.Images.CRATE_WIDTH + 30, Constants.Images.CRATE_WIDTH,
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - (Constants.Images.CRATE_WIDTH + 30) / 2),
-            y + Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 70 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 70 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-
-        y -= (int) (Constants.GRABBER_SPEED);
-
-        if (y <= Constants.BORDER_HEIGHT)
-          state = State.STANDBY;
-        break;
-      case LOWERING_EMPTY:
-        g.drawImage(
-            Horizontal.getScaledInstance(Constants.Images.CRATE_WIDTH + 30, Constants.Images.CRATE_WIDTH,
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - (Constants.Images.CRATE_WIDTH + 30) / 2),
-            y + Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-
-        y += (int) (Constants.GRABBER_SPEED);
-
-        if (y + Constants.BORDER_HEIGHT + 41 >= Constants.PLATFORM_POS[0][1]
-            - currHeight * Constants.Images.CRATE_HEIGHT) {
-          state = (succesfull) ? State.RAISING : State.RAISING_EMPTY;
+  public void paint(Graphics g) {
+    if (state == State.STANDBY) {
+        y = Constants.BORDER_HEIGHT;
+    } else if (state == State.RAISING) {
+        if (y < Constants.BORDER_HEIGHT) {
+            state = State.STANDBY;
+        } else {
+            y -= Constants.GRABBER_SPEED;
         }
-        break;
-      case LOWERING:
-        g.drawImage(
-            Horizontal.getScaledInstance(Constants.Images.CRATE_WIDTH + 30, Constants.Images.CRATE_WIDTH,
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - (Constants.Images.CRATE_WIDTH + 30) / 2),
-            y + Constants.BORDER_HEIGHT + 30,
-            null);
-        g.drawImage(
-            Vertical.getScaledInstance(Constants.Images.CRATE_WIDTH, Math.max(y - Constants.BORDER_HEIGHT + 30, 30),
-                Image.SCALE_DEFAULT),
-            (int) (100 + 143 * (currColumn - 1) - Constants.Images.CRATE_WIDTH / 2), Constants.BORDER_HEIGHT, null);
-        g.drawImage(Left, (int) (100 + 143 * (currColumn - 1) - 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-        g.drawImage(Right, (int) (100 + 143 * (currColumn - 1) + 80 - Constants.Images.CRATE_WIDTH / 2),
-            y + Constants.BORDER_HEIGHT + 21, null);
-
-        y += (int) (Constants.GRABBER_SPEED);
-
-        if (y + Constants.BORDER_HEIGHT + 41 >= Constants.PLATFORM_POS[0][1]
-            - currHeight * Constants.Images.CRATE_HEIGHT) {
-          state = State.RAISING_EMPTY;
+    } else if (state == State.LOWERING) {
+        if (heldCrate == null && y > currHeight || heldCrate != null && y > heldCrate.getY()) {
+            state = State.RAISING;
+            int crateHeight = crates.get((int)currColumn).size() - 1;
+            if (heldCrate == null) {
+                if (crateHeight >= 0) {
+                    if (heldCrate == null) {
+                        heldCrate = crates.get((int)currColumn).get(crateHeight);
+                        crates.get((int)currColumn).remove(crateHeight);
+                    }
+                }
+            } else {
+                if (crates.get((int)currColumn).size() < 6) {
+                    heldCrate.setColumn((int)currColumn);
+                    heldCrate.setHeight(currHeight);
+                    crates.get((int)currColumn).add(heldCrate);
+                    heldCrate = null;
+                }
+            }
+        } else {
+            y += Constants.GRABBER_SPEED;
         }
-        break;
+    }
+
+
+    x = (int) (currColumn * 143 + 100);
+    g.drawImage(Vertical.getScaledInstance(80, Math.max(y - Constants.BORDER_HEIGHT + 30, 30), Image.SCALE_DEFAULT), x - 40, y, null);
+    if (heldCrate == null) {
+        g.drawImage(Horizontal.getScaledInstance(100, 80, Image.SCALE_DEFAULT), x - 50, y + 30, null);
+        g.drawImage(Left, x - Constants.Images.CRATE_WIDTH / 2 - 85, y + 21, null);
+        g.drawImage(Right, x - Constants.Images.CRATE_WIDTH / 2 + 85, y + 21, null);
+    } else {
+        g.drawImage(Horizontal, x - 35, y + 30, null);
+        g.drawImage(Left, x - Constants.Images.CRATE_WIDTH / 2 - 70, y + 21, null);
+        g.drawImage(Right, x - Constants.Images.CRATE_WIDTH / 2 + 70, y + 21, null);
+    }
+    if (heldCrate != null) {
+        g.drawImage(heldCrate.getImage(), x- Constants.Images.CRATE_WIDTH / 2, y + 45, null);
     }
   }
 

@@ -43,8 +43,23 @@ public class MouseInput implements MouseInputListener {
   public void mousePressed(MouseEvent arg0) {
     if (arg0.getButton() == MouseEvent.BUTTON1) {
       count = 0;
-      count = (int) Math.floor(arg0.getX() / (Constants.WIDTH / (Constants.MAX_NUM_LINE))) + 1;
+      count = (int) Math.floor(arg0.getX() / (Constants.WIDTH / (Constants.MAX_NUM_LINE)));
 
+      grabber.goTo(count);
+
+      // if (crates.get(count).size() > 0) {
+      //   if (grabber.heldCrate == null) {
+      //     crates.get(count).remove(crates.get(count).size()-1);
+      //   } else {
+      //     temp = grabber.goTo(count);
+      //   }
+      // } else {
+      //   temp = grabber.goTo(count);
+
+      // }
+      // if (temp != null) {
+      //   crates.get(count).add(temp);
+      // }
     }
   }
 

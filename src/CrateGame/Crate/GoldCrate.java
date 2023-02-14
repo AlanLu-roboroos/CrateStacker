@@ -5,13 +5,13 @@ import java.awt.Graphics;
 import CrateGame.Constants;
 
 public class GoldCrate extends BaseCrate implements Crate {
-  private int line;
-  private int height;
-  private int x;
-  private int y;
-  private boolean infected;
-  private boolean explosionResistence;
-  private Image image = Constants.Images.GOLD_IMG;
+  public int line;
+  public int height;
+  public int x;
+  public int y;
+  public boolean infected;
+  public boolean explosionResistence;
+  public Image image = Constants.Images.GOLD_IMG;
 
   private long fallStartTime;
 

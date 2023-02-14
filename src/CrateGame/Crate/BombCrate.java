@@ -6,14 +6,14 @@ import java.awt.Graphics;
 import CrateGame.Constants;
 
 public class BombCrate extends BaseCrate implements Crate {
-  private int line;
-  private int height;
-  private int x;
-  private int y;
-  private boolean infected;
-  private boolean explosionResistence;
-  private Image image1 = Constants.Images.BOMB_IMG;
-  private Image image2 = Constants.Images.BOMB_FLASH_IMG;
+  public int line;
+  public int height;
+  public int x;
+  public int y;
+  public boolean infected;
+  public boolean explosionResistence;
+  public Image image1 = Constants.Images.BOMB_IMG;
+  public Image image2 = Constants.Images.BOMB_FLASH_IMG;
 
   private long fallStartTime;
   private long bombInitTime;
