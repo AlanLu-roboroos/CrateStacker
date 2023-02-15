@@ -22,7 +22,7 @@ public final class Constants {
         public static final int MAX_NUM_LINE = 8;
         public static final int CRATES_PER_LINE = 6;
         public static final double CRATE_POS_SPAWNABLE = 6.5;
-        public static final long GRABBER_SPEED = 10000;
+        public static final long GRABBER_SPEED = 10000;// 10000;
 
         public static class Images {
                 public static final int CRATE_HEIGHT = 70;
@@ -31,7 +31,7 @@ public final class Constants {
                 public static final Image PLATFORM_IMG = loadImage("./Textures/objects/platform.png")
                                 .getScaledInstance(80, 80, Image.SCALE_DEFAULT);
                 public static final Image SPAWN_IMG = loadImage("./Textures/objects/spawn.png")
-                                .getScaledInstance(80, 80, Image.SCALE_DEFAULT);
+                                .getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
                 public static final Image GRABBER_HORIZONTAL_IMG = loadImage("./Textures/grabber/grabberHori.png")
                                 .getScaledInstance(CRATE_HEIGHT, CRATE_WIDTH, Image.SCALE_DEFAULT);

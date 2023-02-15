@@ -24,7 +24,7 @@ public interface Crate {
 
   public void setColumn(int column);
 
-  public void setHeight(int height);
+  public void setHeight(int pheight, int height);
 
   public Image getImage();
 

@@ -17,6 +17,8 @@ public class Grabber {
 
     public ArrayList<ArrayList<Crate>> crates;
 
+    public int lastHeight;
+
     public enum State {
         STANDBY,
         RAISING,
@@ -58,16 +60,17 @@ public class Grabber {
             if (y < Constants.BORDER_HEIGHT) {
                 state = State.STANDBY;
             } else {
-                y = (int) (Constants.PLATFORM_POS[0][1] - Constants.Images.CRATE_HEIGHT * currHeight
-                        - Constants.GRABBER_SPEED * (System.currentTimeMillis() - startTime) / 1000);
+                y = (int) (lastHeight - Constants.GRABBER_SPEED * (System.currentTimeMillis() - startTime) / 1000);
             }
         } else if (state == State.LOWERING) {
             if (heldCrate == null && crates.get((int) currColumn).size() > 0 && y > Constants.PLATFORM_POS[0][1]
                     || heldCrate == null && crates.get((int) currColumn).size() > 0
                             && y > crates.get((int) currColumn).get(crates.get((int) currColumn).size() - 1).getY()
-                                    - Constants.Images.CRATE_HEIGHT - 70
-                    || heldCrate != null && y > heldCrate.getY() - Constants.Images.CRATE_HEIGHT - 70) {
+                                    - Constants.Images.CRATE_HEIGHT - 50 
+                    || heldCrate != null && crates.get((int) currColumn).size() > 0 && y > (crates.get((int)currColumn).get(crates.get((int)currColumn).size()-1).getY() - Constants.Images.CRATE_HEIGHT - 70)
+                    || crates.get((int) currColumn).size() == 0 && y > Constants.PLATFORM_POS[0][1] - 50) {
                 state = State.RAISING;
+                lastHeight = y;
                 startTime = System.currentTimeMillis();
                 int crateHeight = crates.get((int) currColumn).size() - 1;
                 if (heldCrate == null) {
@@ -80,7 +83,7 @@ public class Grabber {
                 } else {
                     if (crates.get((int) currColumn).size() < 6) {
                         heldCrate.setColumn((int) currColumn);
-                        heldCrate.setHeight(currHeight);
+                        heldCrate.setHeight(y, crates.get((int)currColumn).size());
                         crates.get((int) currColumn).add(heldCrate);
                         heldCrate = null;
                     }
@@ -95,11 +98,11 @@ public class Grabber {
         g.drawImage(Vertical.getScaledInstance(80, Math.max(y - Constants.BORDER_HEIGHT + 30, 30), Image.SCALE_DEFAULT),
                 x - 40, Constants.BORDER_HEIGHT, null);
         if (heldCrate == null) {
-            g.drawImage(Horizontal.getScaledInstance(100, 80, Image.SCALE_DEFAULT), x - 50, y + 30, null);
+            g.drawImage(Horizontal.getScaledInstance(100, 80, Image.SCALE_DEFAULT), x - 50, y + 28, null);
             g.drawImage(Left, x - Constants.Images.CRATE_WIDTH / 2 - 85, y + 21, null);
             g.drawImage(Right, x - Constants.Images.CRATE_WIDTH / 2 + 85, y + 21, null);
         } else {
-            g.drawImage(Horizontal, x - 35, y + 30, null);
+            g.drawImage(Horizontal, x - 35, y + 28, null);
             g.drawImage(Left, x - Constants.Images.CRATE_WIDTH / 2 - 70, y + 21, null);
             g.drawImage(Right, x - Constants.Images.CRATE_WIDTH / 2 + 70, y + 21, null);
         }

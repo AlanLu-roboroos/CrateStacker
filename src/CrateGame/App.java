@@ -34,7 +34,7 @@ public class App {
 
         spawnTimer = new Timer(0, null);
         spawnTimer.setRepeats(true);
-        spawnTimer.setDelay(500);
+        spawnTimer.setDelay(800);
         spawnTimer.addActionListener(e -> {
             while (game.spawnable() && !game.spawnCrate(random.nextInt(8))) {
             }
