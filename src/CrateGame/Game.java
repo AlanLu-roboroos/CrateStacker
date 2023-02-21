@@ -104,7 +104,7 @@ public class Game extends JPanel {
 
     for (ArrayList<Crate> crate : crates) {
       for (Crate c : crate) {
-        c.paint(g, 0, crates);
+        c.paint(g, 0);
       }
     }
 

@@ -5,35 +5,54 @@ import java.util.ArrayList;
 import java.awt.Graphics;
 import CrateGame.Constants;
 
-public class BombCrate extends BaseCrate implements Crate {
-  public int line;
-  public int height;
-  public int x;
-  public int y;
-  public boolean infected;
-  public boolean explosionResistence;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import javax.swing.event.SwingPropertyChangeSupport;
+
+public class BombCrate extends BaseCrate implements Crate, ExplodableCrate {
   public Image image1 = Constants.Images.BOMB_IMG;
   public Image image2 = Constants.Images.BOMB_FLASH_IMG;
+  public boolean exploded = false;
 
-  private long fallStartTime;
   private long bombInitTime;
-
-  private int[] pos;
 
   public BombCrate(int line, int height, double crateSpawnHeight) {
     super(line, height, crateSpawnHeight);
-    
+
     bombInitTime = System.currentTimeMillis();
   }
 
   @Override
   public Image getImage() {
-    return ((System.currentTimeMillis() - bombInitTime) % 1000 > 500) ? image1 : image2;
+    return ((System.currentTimeMillis() - bombInitTime) % 600 > 300) ? image1 : image2;
   }
 
   @Override
   public Crate nextCrate(int line, int height) {
     return null;
+  }
+
+  @Override
+  public void paint(Graphics g, int isHeld) {
+    super.paint(g, 0);
+  }
+
+  public void explode(ArrayList<ArrayList<Crate>> crates) {
+    if (!exploded && System.currentTimeMillis() - bombInitTime > 5000) {
+      exploded = true;
+      crates.get(line).removeIf(new Predicate<Crate>() {
+        @Override
+        public boolean test(Crate arg0) {
+          int idx = crates.get(line).indexOf(arg0);
+          if (idx == height + 1 || idx == height - 1 || idx == height) {
+            return true;
+          }
+          return false;
+        }
+
+      });
+    }
   }
 
   @Override
