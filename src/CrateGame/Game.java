@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 import CrateGame.Crate.Crate;
+import CrateGame.Crate.ExplodableCrate;
 import CrateGame.Crate.GoldCrate;
 import CrateGame.Crate.GreenCrate;
 import CrateGame.Crate.OrangeCrate;
@@ -28,6 +29,7 @@ public class Game extends JPanel {
 
   public ArrayList<ArrayList<Crate>> crates = new ArrayList<>();
   public ArrayList<Integer> spawnCrates = new ArrayList<Integer>();
+  public ArrayList<ExplodableCrate> bombCrates = new ArrayList<ExplodableCrate>();
 
   public Grabber grabber = new Grabber(crates);
   public MouseInput mouseInput = new MouseInput(crates, grabber);
@@ -48,6 +50,7 @@ public class Game extends JPanel {
     addMouseListener(mouseInput);
 
     spawnCrates.add(0);
+    spawnCrates.add(8);
 
     setVisible(true);
   }
@@ -93,9 +96,15 @@ public class Game extends JPanel {
       // g.drawRect(pos[0], pos[1], 2, 2); // For Testing
     }
 
+    for (ExplodableCrate crate : bombCrates) {
+      crate.explode(crates);
+    }
+
+    // System.out.println(bombCrates.toString());
+
     for (ArrayList<Crate> crate : crates) {
       for (Crate c : crate) {
-        c.paint(g, 0);
+        c.paint(g, 0, crates);
       }
     }
 
@@ -108,7 +117,7 @@ public class Game extends JPanel {
 
   public boolean spawnCrate(int column) {
     if (crates.get(column).size() < Constants.CRATES_PER_LINE) {
-      Crate temp = getCrate(random.nextInt(spawnCrates.size()), column, crates.get(column).size(),
+      Crate temp = getCrate(spawnCrates.get(random.nextInt(spawnCrates.size())), column, crates.get(column).size(),
           Constants.CRATE_SPAWN_HEIGHT);
       // crates.get(column).add(new BombCrate(column, crates.get(column).size(),
       // Constants.CRATE_SPAWN_HEIGHT));
@@ -138,15 +147,24 @@ public class Game extends JPanel {
         if (mergeCounter >= 3) {
           mergeCounter = 0;
           tempMergeCrate = crates.get(j).get(i).nextCrate(j, i - 2);
+          // Crate tempCrate = crates.get(j).get(i);
+          // bombCrates.removeIf((ExplodableCrate x) -> x.hashCode() ==
+          // tempCrate.hashCode());
+          // tempCrate = crates.get(j).get(i - 1);
+          // bombCrates.removeIf((ExplodableCrate x) -> x.hashCode() ==
+          // tempCrate.hashCode());
+          // tempCrate = crates.get(j).get(i - 2);
+          // bombCrates.removeIf((ExplodableCrate x) -> x.hashCode() ==
+          // tempCrate.hashCode());
           crates.get(j).remove(i);
           crates.get(j).remove(i - 1);
           crates.get(j).remove(i - 2);
 
-          if (tempMergeCrate.spawnable() && !spawnCrates.contains(tempMergeCrate.getCrateID())) {
-            spawnCrates.add(tempMergeCrate.getCrateID());
-          }
-
           if (tempMergeCrate != null) {
+            if (tempMergeCrate.spawnable() && !spawnCrates.contains(tempMergeCrate.getCrateID())) {
+              spawnCrates.add(tempMergeCrate.getCrateID());
+            }
+
             crates.get(j).add(i - 2, tempMergeCrate);
           }
         }
@@ -190,7 +208,9 @@ public class Game extends JPanel {
       case 7:
         return new GoldCrate(column, row, height);
       case 8:
-        return new BombCrate(column, row, height);
+        Crate tempCrate = new BombCrate(column, row, height);
+        bombCrates.add((ExplodableCrate) tempCrate);
+        return tempCrate;
       default:
         return null;
     }

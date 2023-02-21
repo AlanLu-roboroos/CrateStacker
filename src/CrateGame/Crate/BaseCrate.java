@@ -38,6 +38,7 @@ public abstract class BaseCrate implements Crate {
   }
 
   public void setHeight(int pheight, int height) {
+    fallStartTime = System.currentTimeMillis();
     this.y = pheight;
     this.height = height;
   }

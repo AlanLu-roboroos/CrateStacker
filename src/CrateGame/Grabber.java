@@ -66,8 +66,10 @@ public class Grabber {
             if (heldCrate == null && crates.get((int) currColumn).size() > 0 && y > Constants.PLATFORM_POS[0][1]
                     || heldCrate == null && crates.get((int) currColumn).size() > 0
                             && y > crates.get((int) currColumn).get(crates.get((int) currColumn).size() - 1).getY()
-                                    - Constants.Images.CRATE_HEIGHT - 50 
-                    || heldCrate != null && crates.get((int) currColumn).size() > 0 && y > (crates.get((int)currColumn).get(crates.get((int)currColumn).size()-1).getY() - Constants.Images.CRATE_HEIGHT - 70)
+                                    - Constants.Images.CRATE_HEIGHT - 50
+                    || heldCrate != null && crates.get((int) currColumn).size() > 0
+                            && y > (crates.get((int) currColumn).get(crates.get((int) currColumn).size() - 1).getY()
+                                    - Constants.Images.CRATE_HEIGHT - 70)
                     || crates.get((int) currColumn).size() == 0 && y > Constants.PLATFORM_POS[0][1] - 50) {
                 state = State.RAISING;
                 lastHeight = y;
@@ -83,7 +85,14 @@ public class Grabber {
                 } else {
                     if (crates.get((int) currColumn).size() < 6) {
                         heldCrate.setColumn((int) currColumn);
-                        heldCrate.setHeight(y, crates.get((int)currColumn).size());
+                        if (crates.get((int) currColumn).size() == 0) {
+                            heldCrate.setHeight(y + 50, crates.get((int) currColumn).size());
+                        } else {
+                            heldCrate.setHeight(
+                                    crates.get((int) currColumn).get(crates.get((int) currColumn).size() - 1).getY()
+                                            - 50,
+                                    crates.get((int) currColumn).size());
+                        }
                         crates.get((int) currColumn).add(heldCrate);
                         heldCrate = null;
                     }

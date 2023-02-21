@@ -48,17 +48,17 @@ public class MouseInput implements MouseInputListener {
       grabber.goTo(count);
 
       // if (crates.get(count).size() > 0) {
-      //   if (grabber.heldCrate == null) {
-      //     crates.get(count).remove(crates.get(count).size()-1);
-      //   } else {
-      //     temp = grabber.goTo(count);
-      //   }
+      // if (grabber.heldCrate == null) {
+      // crates.get(count).remove(crates.get(count).size()-1);
       // } else {
-      //   temp = grabber.goTo(count);
+      // temp = grabber.goTo(count);
+      // }
+      // } else {
+      // temp = grabber.goTo(count);
 
       // }
       // if (temp != null) {
-      //   crates.get(count).add(temp);
+      // crates.get(count).add(temp);
       // }
     }
   }
