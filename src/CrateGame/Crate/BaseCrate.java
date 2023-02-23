@@ -35,6 +35,7 @@ public abstract class BaseCrate implements Crate {
 
   public void setColumn(int column) {
     this.x = Constants.SPAWN_POS[column][0];
+    this.line = column;
   }
 
   public void setHeight(int pheight, int height) {

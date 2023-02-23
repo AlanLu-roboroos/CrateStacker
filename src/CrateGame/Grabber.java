@@ -86,11 +86,11 @@ public class Grabber {
                     if (crates.get((int) currColumn).size() < 6) {
                         heldCrate.setColumn((int) currColumn);
                         if (crates.get((int) currColumn).size() == 0) {
-                            heldCrate.setHeight(y + 50, crates.get((int) currColumn).size());
+                            heldCrate.setHeight(y + 35, crates.get((int) currColumn).size());
                         } else {
                             heldCrate.setHeight(
                                     crates.get((int) currColumn).get(crates.get((int) currColumn).size() - 1).getY()
-                                            - 50,
+                                            - 35,
                                     crates.get((int) currColumn).size());
                         }
                         crates.get((int) currColumn).add(heldCrate);
