@@ -2,6 +2,20 @@
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
+
+
+## Compiling
+
+### To .class
+
+javac src/\*\*/\*.jar -d ../bin/
+
+### To .jar
+
+Jar cvfe crate.jar CrateGame.App CrateGame/\*
+
+
+
 ## Folder Structure
 
 The workspace contains two folders by default, where:

@@ -46,7 +46,8 @@ public class BombCrate extends BaseCrate implements Crate, ExplodableCrate {
         public boolean test(Crate arg0) {
           int idx = crates.get(line).indexOf(arg0);
           if (idx == height + 1 || idx == height - 1 || idx == height) {
-            return true;
+            if (arg0.getY() == Constants.PLATFORM_POS[0][1] - getImage().getHeight(null) * idx && arg0.explodable())
+              return true;
           }
           return false;
         }

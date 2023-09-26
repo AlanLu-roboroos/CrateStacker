@@ -100,4 +100,9 @@ public abstract class BaseCrate implements Crate {
   public int getY() {
     return y;
   }
+
+  @Override
+  public boolean explodable() {
+    return !this.explosionResistence;
+  }
 }

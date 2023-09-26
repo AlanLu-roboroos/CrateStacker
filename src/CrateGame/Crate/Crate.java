@@ -31,5 +31,7 @@ public interface Crate {
   public int getY();
 
   public int getX();
+
+  public boolean explodable();
 }
 
